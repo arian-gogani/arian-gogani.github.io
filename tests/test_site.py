@@ -63,12 +63,13 @@ def main() -> None:
     fallback = module.load("https://127.0.0.1:1/profile.json")
     check(fallback["identity"]["name"] == "Arian Gogani", "remote failure did not use verified snapshot")
     check(evidence.count('class="ledger-record reveal"') == 18, "evidence ledger does not contain 18 records")
+    check('href="styles.css?v=2"' in page and 'href="styles.css?v=2"' in evidence, "pages do not bust the stale stylesheet cache")
     check("Closed without merge" in evidence, "closed yfinance status was lost")
     check("36 checks with zero failures" in evidence, "fresh Witness Independence result missing")
     check("62 passing tests" in evidence and "12-mutation" in evidence, "fresh DefaultDrift result missing")
     check("decompress_sync" not in evidence, "unpublished aiohttp draft entered public ledger")
     check((ROOT / "evidence.js").stat().st_size > 500, "ledger filtering script is incomplete")
-    print("portfolio checks: 18/18 passed")
+    print("portfolio checks: 19/19 passed")
 
 
 if __name__ == "__main__":
