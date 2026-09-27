@@ -67,6 +67,7 @@ def build(profile: dict) -> str:
         </li>'''
         for r in profile["external_results"]
     )
+    search_title = f"{ident['name']} | {ident['school']} student and Nobulex creator"
 
     json_ld = json.dumps(
         {
@@ -93,15 +94,15 @@ def build(profile: dict) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{esc(ident['name'])} · AI decision integrity</title>
+  <title>{esc(search_title)}</title>
   <meta name="description" content="{esc(ident['short_bio'])}">
   <link rel="canonical" href="{esc(links['portfolio'])}/">
   <meta property="og:type" content="profile">
-  <meta property="og:title" content="{esc(ident['name'])} · AI decision integrity">
+  <meta property="og:title" content="{esc(search_title)}">
   <meta property="og:description" content="{esc(ident['short_bio'])}">
   <meta property="og:url" content="{esc(links['portfolio'])}/">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="{esc(ident['name'])} · AI decision integrity">
+  <meta name="twitter:title" content="{esc(search_title)}">
   <meta name="twitter:description" content="{esc(ident['short_bio'])}">
   <meta name="theme-color" content="#07110f">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">

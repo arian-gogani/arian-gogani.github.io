@@ -45,6 +45,7 @@ def main() -> None:
     parser.feed(page)
 
     check("Granite Bay High School" in page, "school missing from portfolio")
+    check("<title>Arian Gogani | Granite Bay High School student and Nobulex creator</title>" in page, "search title does not identify the school")
     check("arian-gogani-nobulex" in page, "official LinkedIn missing")
     check("4017b0369" not in page, "old duplicate profile leaked into portfolio")
     check({"main", "top", "work", "architecture", "evidence"} <= parser.ids, "required landmarks missing")
@@ -69,7 +70,7 @@ def main() -> None:
     check("62 passing tests" in evidence and "12-mutation" in evidence, "fresh DefaultDrift result missing")
     check("decompress_sync" not in evidence, "unpublished aiohttp draft entered public ledger")
     check((ROOT / "evidence.js").stat().st_size > 500, "ledger filtering script is incomplete")
-    print("portfolio checks: 19/19 passed")
+    print("portfolio checks: 20/20 passed")
 
 
 if __name__ == "__main__":
