@@ -53,6 +53,7 @@ def main() -> None:
     check("Missing evidence is not approval." in page, "core principle missing")
     check((ROOT / "styles.css").stat().st_size > 5000, "site styling is unexpectedly incomplete")
     check((ROOT / "app.js").stat().st_size > 500, "data-loop client is unexpectedly incomplete")
+    check('href="favicon.svg"' in page and (ROOT / "favicon.svg").exists(), "site icon missing")
 
     spec = importlib.util.spec_from_file_location("portfolio_build", ROOT / "scripts" / "build.py")
     module = importlib.util.module_from_spec(spec)
@@ -60,7 +61,7 @@ def main() -> None:
     spec.loader.exec_module(module)
     fallback = module.load("https://127.0.0.1:1/profile.json")
     check(fallback["identity"]["name"] == "Arian Gogani", "remote failure did not use verified snapshot")
-    print("portfolio checks: 11/11 passed")
+    print("portfolio checks: 12/12 passed")
 
 
 if __name__ == "__main__":

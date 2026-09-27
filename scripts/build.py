@@ -104,6 +104,7 @@ def build(profile: dict) -> str:
   <meta name="twitter:title" content="{esc(ident['name'])} · AI decision integrity">
   <meta name="twitter:description" content="{esc(ident['short_bio'])}">
   <meta name="theme-color" content="#07110f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
