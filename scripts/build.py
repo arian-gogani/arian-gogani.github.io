@@ -6,6 +6,8 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -18,8 +20,18 @@ def load(source: str) -> dict:
     if path.exists():
         return json.loads(path.read_text(encoding="utf-8"))
     request = urllib.request.Request(source, headers={"User-Agent": "arian-gogani-portfolio-builder"})
-    with urllib.request.urlopen(request, timeout=20) as response:
-        return json.load(response)
+    try:
+        with urllib.request.urlopen(request, timeout=20) as response:
+            return json.load(response)
+    except urllib.error.URLError as exc:
+        snapshot = ROOT / "data" / "profile.json"
+        if not snapshot.exists():
+            raise
+        print(
+            f"canonical profile unavailable ({exc}); using checked-in verified snapshot",
+            file=sys.stderr,
+        )
+        return json.loads(snapshot.read_text(encoding="utf-8"))
 
 
 def esc(value: object) -> str:

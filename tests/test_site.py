@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import importlib.util
 import subprocess
 import sys
 from html.parser import HTMLParser
@@ -51,7 +52,14 @@ def main() -> None:
     check("Missing evidence is not approval." in page, "core principle missing")
     check((ROOT / "styles.css").stat().st_size > 5000, "site styling is unexpectedly incomplete")
     check((ROOT / "app.js").stat().st_size > 500, "data-loop client is unexpectedly incomplete")
-    print("portfolio checks: 10/10 passed")
+
+    spec = importlib.util.spec_from_file_location("portfolio_build", ROOT / "scripts" / "build.py")
+    module = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(module)
+    fallback = module.load("https://127.0.0.1:1/profile.json")
+    check(fallback["identity"]["name"] == "Arian Gogani", "remote failure did not use verified snapshot")
+    print("portfolio checks: 11/11 passed")
 
 
 if __name__ == "__main__":
