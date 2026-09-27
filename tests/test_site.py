@@ -39,6 +39,7 @@ def main() -> None:
     source = sibling_source if sibling_source.exists() else ROOT / "data" / "profile.json"
     subprocess.run([sys.executable, str(ROOT / "scripts" / "build.py"), "--source", str(source)], check=True)
     page = (ROOT / "index.html").read_text(encoding="utf-8")
+    evidence = (ROOT / "evidence.html").read_text(encoding="utf-8")
     profile = json.loads((ROOT / "data" / "profile.json").read_text(encoding="utf-8"))
     parser = Inspector()
     parser.feed(page)
@@ -61,7 +62,13 @@ def main() -> None:
     spec.loader.exec_module(module)
     fallback = module.load("https://127.0.0.1:1/profile.json")
     check(fallback["identity"]["name"] == "Arian Gogani", "remote failure did not use verified snapshot")
-    print("portfolio checks: 12/12 passed")
+    check(evidence.count('class="ledger-record reveal"') == 18, "evidence ledger does not contain 18 records")
+    check("Closed without merge" in evidence, "closed yfinance status was lost")
+    check("36 checks with zero failures" in evidence, "fresh Witness Independence result missing")
+    check("62 passing tests" in evidence and "12-mutation" in evidence, "fresh DefaultDrift result missing")
+    check("decompress_sync" not in evidence, "unpublished aiohttp draft entered public ledger")
+    check((ROOT / "evidence.js").stat().st_size > 500, "ledger filtering script is incomplete")
+    print("portfolio checks: 18/18 passed")
 
 
 if __name__ == "__main__":

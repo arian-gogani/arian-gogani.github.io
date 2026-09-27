@@ -121,6 +121,7 @@ def build(profile: dict) -> str:
       <a href="#work">Work</a>
       <a href="#architecture">Architecture</a>
       <a href="#evidence">Evidence</a>
+      <a href="evidence.html">Full ledger</a>
       <a class="nav-cta" href="{esc(links['github'])}">GitHub ↗</a>
     </nav>
   </header>
@@ -185,6 +186,7 @@ def build(profile: dict) -> str:
         <h2>The useful result is what changed outside my repository.</h2>
       </div>
       <ul>{results}</ul>
+      <a class="button secondary ledger-button" href="evidence.html">Open all {len(profile['achievements'])} linked records →</a>
     </section>
 
     <section class="principle reveal">
@@ -212,6 +214,125 @@ def build(profile: dict) -> str:
 '''
 
 
+def build_evidence(profile: dict) -> str:
+    ident = profile["identity"]
+    links = profile["links"]
+    achievements = sorted(profile["achievements"], key=lambda item: item["rank"])
+
+    cards = []
+    for item in achievements:
+        category = (
+            "external"
+            if item["classification"].startswith(("Normative", "Merged", "Closed"))
+            or "upstream" in item["classification"].lower()
+            else "research"
+        )
+        links_html = "".join(
+            f'<a href="{esc(link["url"])}">{esc(link["label"])} ↗</a>' for link in item["links"]
+        )
+        cards.append(
+            f'''<article class="ledger-record reveal" data-category="{category}" data-search="{esc((item['title'] + ' ' + item['classification'] + ' ' + item['summary']).lower())}">
+          <div class="ledger-rank">{int(item['rank']):02d}</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>{esc(item['classification'])}</span><strong>{esc(item['status'])}</strong></div>
+            <h2>{esc(item['title'])}</h2>
+            <p>{esc(item['summary'])}</p>
+            <div class="ledger-links">{links_html}</div>
+            <p class="ledger-caveat"><b>Boundary:</b> {esc(item['caveat'])}</p>
+          </div>
+        </article>'''
+        )
+
+    json_ld = json.dumps(
+        {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "Arian Gogani Evidence Ledger",
+            "url": f"{links['portfolio']}/evidence.html",
+            "description": "Linked public record of Arian Gogani's merged contributions, research, listings, and closed work.",
+            "author": {"@type": "Person", "name": ident["name"], "url": links["portfolio"]},
+            "mainEntity": [
+                {"@type": "CreativeWork", "position": a["rank"], "name": a["title"], "url": a["links"][0]["url"]}
+                for a in achievements
+            ],
+        },
+        separators=(",", ":"),
+    ).replace("</", "<\\/")
+
+    return f'''<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evidence Ledger · {esc(ident['name'])}</title>
+  <meta name="description" content="Every linked, verified public contribution and research record for {esc(ident['name'])}, with status and limitations.">
+  <link rel="canonical" href="{esc(links['portfolio'])}/evidence.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Evidence Ledger · {esc(ident['name'])}">
+  <meta property="og:description" content="Merged work, public research, listings, and closed contributions. Every record links to its evidence and names its boundary.">
+  <meta property="og:url" content="{esc(links['portfolio'])}/evidence.html">
+  <meta name="theme-color" content="#07110f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">{json_ld}</script>
+  <script src="app.js" defer></script>
+  <script src="evidence.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#ledger">Skip to ledger</a>
+  <div class="ambient" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="wordmark" href="index.html" aria-label="Arian Gogani, home">AG<span>.</span></a>
+    <nav aria-label="Main navigation">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#architecture">Architecture</a>
+      <a class="nav-cta" href="{esc(links['github'])}">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <main id="ledger">
+    <section class="ledger-hero reveal">
+      <p class="kicker"><span class="status-dot"></span> Public record · {len(achievements)} linked entries</p>
+      <h1>Evidence,<br><em>classified.</em></h1>
+      <p class="hero-intro">Every public achievement I can currently substantiate with a link. Normative changes, merged code, references, listings, self-published research, and closed work are labeled differently because they mean different things.</p>
+    </section>
+
+    <section class="ledger-controls" aria-label="Filter evidence ledger">
+      <label for="ledger-search">Search the ledger</label>
+      <input id="ledger-search" type="search" placeholder="Try OWASP, Microsoft, validator…" autocomplete="off">
+      <div class="filter-row" role="group" aria-label="Record type">
+        <button class="active" type="button" data-filter="all">All <span>{len(achievements)}</span></button>
+        <button type="button" data-filter="external">External movement</button>
+        <button type="button" data-filter="research">Public research</button>
+      </div>
+    </section>
+
+    <section class="ledger-list" aria-live="polite">
+      {''.join(cards)}
+      <p class="ledger-empty" hidden>No linked records match that filter.</p>
+    </section>
+
+    <section class="ledger-method reveal">
+      <p class="eyebrow">Ranking rule</p>
+      <h2>Movement outside my repository ranks first.</h2>
+      <p>A change to someone else’s normative text or code outranks a reference. A reference outranks a list. A list outranks a page I wrote about myself. Statuses are rechecked against the linked artifact, so old “open” labels become “merged” or “closed” when reality changes.</p>
+      <p>Excluded from this page: private drafts, work with no surviving public artifact, and claims that cannot be linked.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div><strong>{esc(ident['name'])}</strong><p>{esc(ident['role'])} at {esc(ident['school'])}.</p></div>
+    <nav aria-label="Profile links"><a href="index.html">Portfolio</a><a href="{esc(links['github'])}">GitHub</a><a href="{esc(links['linkedin'])}" rel="me">Official LinkedIn</a></nav>
+    <p class="identity-note">Generated from the same canonical public profile data as the GitHub profile.</p>
+  </footer>
+</body>
+</html>
+'''
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--source", default=DEFAULT_SOURCE)
@@ -220,6 +341,7 @@ def main() -> None:
     (ROOT / "data").mkdir(exist_ok=True)
     (ROOT / "data" / "profile.json").write_text(json.dumps(profile, indent=2) + "\n", encoding="utf-8")
     (ROOT / "index.html").write_text(build(profile), encoding="utf-8")
+    (ROOT / "evidence.html").write_text(build_evidence(profile), encoding="utf-8")
 
 
 if __name__ == "__main__":

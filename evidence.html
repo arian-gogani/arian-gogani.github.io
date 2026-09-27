@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evidence Ledger · Arian Gogani</title>
+  <meta name="description" content="Every linked, verified public contribution and research record for Arian Gogani, with status and limitations.">
+  <link rel="canonical" href="https://arian-gogani.github.io/evidence.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Evidence Ledger · Arian Gogani">
+  <meta property="og:description" content="Merged work, public research, listings, and closed contributions. Every record links to its evidence and names its boundary.">
+  <meta property="og:url" content="https://arian-gogani.github.io/evidence.html">
+  <meta name="theme-color" content="#07110f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Arian Gogani Evidence Ledger","url":"https://arian-gogani.github.io/evidence.html","description":"Linked public record of Arian Gogani's merged contributions, research, listings, and closed work.","author":{"@type":"Person","name":"Arian Gogani","url":"https://arian-gogani.github.io"},"mainEntity":[{"@type":"CreativeWork","position":1,"name":"Execution-receipt guidance merged into OWASP AST09","url":"https://github.com/OWASP/www-project-agentic-skills-top-10/pull/35"},{"@type":"CreativeWork","position":2,"name":"Descriptor traversal fix merged into the AGV validator","url":"https://github.com/aeoess/agent-governance-vocabulary/pull/161"},{"@type":"CreativeWork","position":3,"name":"Five contributions merged into shared agent-governance test vectors","url":"https://github.com/ScopeBlind/agent-governance-testvectors/pull/12"},{"@type":"CreativeWork","position":4,"name":"AML and sanctions cheat sheet merged into OWASP","url":"https://github.com/OWASP/CheatSheetSeries/pull/2210"},{"@type":"CreativeWork","position":5,"name":"Verifiable-compliance-receipts proposal merged into Microsoft's toolkit","url":"https://github.com/microsoft/agent-governance-toolkit/pull/1302"},{"@type":"CreativeWork","position":6,"name":"Nobulex referenced in Microsoft AI Agents for Beginners","url":"https://github.com/microsoft/ai-agents-for-beginners/pull/571"},{"@type":"CreativeWork","position":7,"name":"IETF AUDIT charter corrections merged during review","url":"https://github.com/mirjak/audit-bof-preparation/pull/31"},{"@type":"CreativeWork","position":8,"name":"AST-mapped adversarial fixture-corpus proposal merged","url":"https://github.com/OWASP/www-project-agentic-skills-top-10/pull/46"},{"@type":"CreativeWork","position":9,"name":"CVE-2026-45316 recovered from source without advisory knowledge","url":"https://github.com/arian-gogani/enforcement-coverage"},{"@type":"CreativeWork","position":10,"name":"Witness Independence scale, vectors, and reference grader","url":"https://github.com/arian-gogani/witness-independence"},{"@type":"CreativeWork","position":11,"name":"Nobulex solution entry merged alongside other OWASP tools","url":"https://github.com/OWASP/www-project-agentic-skills-top-10/pull/38"},{"@type":"CreativeWork","position":12,"name":"Nobulex package merged into the Dify plugin marketplace","url":"https://github.com/langgenius/dify-plugins/pull/2500"},{"@type":"CreativeWork","position":13,"name":"Nobulex added to Microsoft Agent Governance Toolkit adopters","url":"https://github.com/microsoft/agent-governance-toolkit/pull/1703"},{"@type":"CreativeWork","position":14,"name":"Medicare policy archival baseline measured across 85 documents","url":"https://github.com/arian-gogani/baseline-audit"},{"@type":"CreativeWork","position":15,"name":"DefaultDrift measured 1,253 patch releases","url":"https://github.com/arian-gogani/defaultdrift"},{"@type":"CreativeWork","position":16,"name":"Nobulex listed in awesome-mcp-servers","url":"https://github.com/punkpeye/awesome-mcp-servers/pull/4512"},{"@type":"CreativeWork","position":17,"name":"THESIS.md publishes five observable falsifiers","url":"https://github.com/arian-gogani/nobulex-registry/blob/main/THESIS.md"},{"@type":"CreativeWork","position":18,"name":"yfinance price-adjustment observability patch submitted","url":"https://github.com/ranaroussi/yfinance/pull/2967"}]}</script>
+  <script src="app.js" defer></script>
+  <script src="evidence.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#ledger">Skip to ledger</a>
+  <div class="ambient" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="wordmark" href="index.html" aria-label="Arian Gogani, home">AG<span>.</span></a>
+    <nav aria-label="Main navigation">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#architecture">Architecture</a>
+      <a class="nav-cta" href="https://github.com/arian-gogani">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <main id="ledger">
+    <section class="ledger-hero reveal">
+      <p class="kicker"><span class="status-dot"></span> Public record · 18 linked entries</p>
+      <h1>Evidence,<br><em>classified.</em></h1>
+      <p class="hero-intro">Every public achievement I can currently substantiate with a link. Normative changes, merged code, references, listings, self-published research, and closed work are labeled differently because they mean different things.</p>
+    </section>
+
+    <section class="ledger-controls" aria-label="Filter evidence ledger">
+      <label for="ledger-search">Search the ledger</label>
+      <input id="ledger-search" type="search" placeholder="Try OWASP, Microsoft, validator…" autocomplete="off">
+      <div class="filter-row" role="group" aria-label="Record type">
+        <button class="active" type="button" data-filter="all">All <span>18</span></button>
+        <button type="button" data-filter="external">External movement</button>
+        <button type="button" data-filter="research">Public research</button>
+      </div>
+    </section>
+
+    <section class="ledger-list" aria-live="polite">
+      <article class="ledger-record reveal" data-category="external" data-search="execution-receipt guidance merged into owasp ast09 normative guidance change owasp changed the ast09 risk page itself to include execution-receipt implementation guidance.">
+          <div class="ledger-rank">01</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Normative guidance change</span><strong>Merged</strong></div>
+            <h2>Execution-receipt guidance merged into OWASP AST09</h2>
+            <p>OWASP changed the AST09 risk page itself to include execution-receipt implementation guidance.</p>
+            <div class="ledger-links"><a href="https://github.com/OWASP/www-project-agentic-skills-top-10/pull/35">OWASP PR #35 ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> A merged contribution is not an OWASP endorsement of Nobulex.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="external" data-search="descriptor traversal fix merged into the agv validator merged code fix the validator now detects descriptor_dimensions shape instead of assuming it. codeql, validation, drift, and dco checks passed before merge.">
+          <div class="ledger-rank">02</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Merged code fix</span><strong>Merged</strong></div>
+            <h2>Descriptor traversal fix merged into the AGV validator</h2>
+            <p>The validator now detects descriptor_dimensions shape instead of assuming it. CodeQL, validation, drift, and DCO checks passed before merge.</p>
+            <div class="ledger-links"><a href="https://github.com/aeoess/agent-governance-vocabulary/pull/161">AGV PR #161 ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> This corrects the older note that the pull request was still waiting on DCO.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="external" data-search="five contributions merged into shared agent-governance test vectors merged implementation and harness changes one nobulex implementation and four later verifier, parser, emitter, and negative-vector changes were merged into scopeblind&#x27;s shared conformance repository.">
+          <div class="ledger-rank">03</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Merged implementation and harness changes</span><strong>Merged</strong></div>
+            <h2>Five contributions merged into shared agent-governance test vectors</h2>
+            <p>One Nobulex implementation and four later verifier, parser, emitter, and negative-vector changes were merged into ScopeBlind&#x27;s shared conformance repository.</p>
+            <div class="ledger-links"><a href="https://github.com/ScopeBlind/agent-governance-testvectors/pull/12">Implementation #12 ↗</a><a href="https://github.com/ScopeBlind/agent-governance-testvectors/pull/15">Coverage #15 ↗</a><a href="https://github.com/ScopeBlind/agent-governance-testvectors/pull/22">Parser #22 ↗</a><a href="https://github.com/ScopeBlind/agent-governance-testvectors/pull/23">Emitter #23 ↗</a><a href="https://github.com/ScopeBlind/agent-governance-testvectors/pull/24">Negative vectors #24 ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> The public research freshly reruns #22 only. Merge does not certify the broader Nobulex product.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="external" data-search="aml and sanctions cheat sheet merged into owasp merged security guidance a 276-line cheat sheet for aml and sanctions controls in ai-agent payments was added to the owasp cheat sheet series.">
+          <div class="ledger-rank">04</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Merged security guidance</span><strong>Merged</strong></div>
+            <h2>AML and sanctions cheat sheet merged into OWASP</h2>
+            <p>A 276-line cheat sheet for AML and sanctions controls in AI-agent payments was added to the OWASP Cheat Sheet Series.</p>
+            <div class="ledger-links"><a href="https://github.com/OWASP/CheatSheetSeries/pull/2210">OWASP CheatSheetSeries #2210 ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> The merged document is guidance, not a certification or legal-compliance guarantee.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="external" data-search="verifiable-compliance-receipts proposal merged into microsoft&#x27;s toolkit merged design proposal microsoft&#x27;s agent governance toolkit added the 75-line proposal to its live documentation tree.">
+          <div class="ledger-rank">05</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Merged design proposal</span><strong>Merged</strong></div>
+            <h2>Verifiable-compliance-receipts proposal merged into Microsoft&#x27;s toolkit</h2>
+            <p>Microsoft&#x27;s Agent Governance Toolkit added the 75-line proposal to its live documentation tree.</p>
+            <div class="ledger-links"><a href="https://github.com/microsoft/agent-governance-toolkit/pull/1302">Microsoft AGT #1302 ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> This is a proposal in the toolkit, not a Microsoft product endorsement.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="external" data-search="nobulex referenced in microsoft ai agents for beginners merged curriculum reference lesson 18 added the nobulex python receipt sdk to its production references.">
+          <div class="ledger-rank">06</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Merged curriculum reference</span><strong>Merged</strong></div>
+            <h2>Nobulex referenced in Microsoft AI Agents for Beginners</h2>
+            <p>Lesson 18 added the Nobulex Python receipt SDK to its production references.</p>
+            <div class="ledger-links"><a href="https://github.com/microsoft/ai-agents-for-beginners/pull/571">Microsoft course #571 ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> A one-line reference is not adoption or endorsement.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="external" data-search="ietf audit charter corrections merged during review merged standards-process edit deliverable numbering and eight editorial errors were corrected in the audit bof preparation charter.">
+          <div class="ledger-rank">07</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Merged standards-process edit</span><strong>Merged</strong></div>
+            <h2>IETF AUDIT charter corrections merged during review</h2>
+            <p>Deliverable numbering and eight editorial errors were corrected in the AUDIT BoF preparation charter.</p>
+            <div class="ledger-links"><a href="https://github.com/mirjak/audit-bof-preparation/pull/31">AUDIT charter #31 ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> This was an editorial contribution, not authorship of the charter or IETF endorsement.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="external" data-search="ast-mapped adversarial fixture-corpus proposal merged merged research proposal owasp added the fixture-corpus proposal and two ast09 vectors to its proposals directory.">
+          <div class="ledger-rank">08</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Merged research proposal</span><strong>Merged</strong></div>
+            <h2>AST-mapped adversarial fixture-corpus proposal merged</h2>
+            <p>OWASP added the fixture-corpus proposal and two AST09 vectors to its proposals directory.</p>
+            <div class="ledger-links"><a href="https://github.com/OWASP/www-project-agentic-skills-top-10/pull/46">OWASP PR #46 ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> It is a discussion proposal, not normative OWASP specification text.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="research" data-search="cve-2026-45316 recovered from source without advisory knowledge reproduced historical vulnerability enforcement coverage reconstructed a weaker read-vs-write permission check from sibling routes and matched the already-published open webui vulnerability.">
+          <div class="ledger-rank">09</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Reproduced historical vulnerability</span><strong>Published research</strong></div>
+            <h2>CVE-2026-45316 recovered from source without advisory knowledge</h2>
+            <p>Enforcement Coverage reconstructed a weaker read-vs-write permission check from sibling routes and matched the already-published Open WebUI vulnerability.</p>
+            <div class="ledger-links"><a href="https://github.com/arian-gogani/enforcement-coverage">Enforcement Coverage ↗</a><a href="https://github.com/open-webui/open-webui/security/advisories/GHSA-jx2x-j75f-xq3j">Official advisory ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> Recovered, not first discovered. The official advisory classifies it as CWE-863 and low severity.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="research" data-search="witness independence scale, vectors, and reference grader self-published executable research the w0-w4 model grades where a receipt&#x27;s trust anchor came from. a fresh documented-dependency run completed 36 checks with zero failures.">
+          <div class="ledger-rank">10</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Self-published executable research</span><strong>Public</strong></div>
+            <h2>Witness Independence scale, vectors, and reference grader</h2>
+            <p>The W0-W4 model grades where a receipt&#x27;s trust anchor came from. A fresh documented-dependency run completed 36 checks with zero failures.</p>
+            <div class="ledger-links"><a href="https://github.com/arian-gogani/witness-independence">Witness Independence ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> This is Arian&#x27;s own model and implementation. Its self-test is not independent validation.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="external" data-search="nobulex solution entry merged alongside other owasp tools merged catalog listing owasp&#x27;s solutions catalog added a 41-line nobulex entry.">
+          <div class="ledger-rank">11</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Merged catalog listing</span><strong>Merged</strong></div>
+            <h2>Nobulex solution entry merged alongside other OWASP tools</h2>
+            <p>OWASP&#x27;s solutions catalog added a 41-line Nobulex entry.</p>
+            <div class="ledger-links"><a href="https://github.com/OWASP/www-project-agentic-skills-top-10/pull/38">OWASP PR #38 ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> A catalog listing is not normative guidance or endorsement.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="external" data-search="nobulex package merged into the dify plugin marketplace merged marketplace package the packaged nobulex plugin was added to dify&#x27;s official plugin repository.">
+          <div class="ledger-rank">12</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Merged marketplace package</span><strong>Merged</strong></div>
+            <h2>Nobulex package merged into the Dify plugin marketplace</h2>
+            <p>The packaged Nobulex plugin was added to Dify&#x27;s official plugin repository.</p>
+            <div class="ledger-links"><a href="https://github.com/langgenius/dify-plugins/pull/2500">Dify plugins #2500 ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> Marketplace inclusion is distribution, not proof of adoption or correctness.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="external" data-search="nobulex added to microsoft agent governance toolkit adopters merged adopters listing the toolkit&#x27;s adopters file added nobulex as its first listed adopter.">
+          <div class="ledger-rank">13</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Merged adopters listing</span><strong>Merged</strong></div>
+            <h2>Nobulex added to Microsoft Agent Governance Toolkit adopters</h2>
+            <p>The toolkit&#x27;s ADOPTERS file added Nobulex as its first listed adopter.</p>
+            <div class="ledger-links"><a href="https://github.com/microsoft/agent-governance-toolkit/pull/1703">Microsoft AGT #1703 ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> The entry was submitted by Arian and does not establish Microsoft endorsement.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="research" data-search="medicare policy archival baseline measured across 85 documents self-published data audit the audit reports 41 of 85 surveyed policies, 48%, with zero archived versions in the measured wayback cdx results.">
+          <div class="ledger-rank">14</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Self-published data audit</span><strong>Public</strong></div>
+            <h2>Medicare policy archival baseline measured across 85 documents</h2>
+            <p>The audit reports 41 of 85 surveyed policies, 48%, with zero archived versions in the measured Wayback CDX results.</p>
+            <div class="ledger-links"><a href="https://github.com/arian-gogani/baseline-audit">Baseline Audit ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> The repository labels this a baseline spike and publishes negative results and scope limits.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="research" data-search="defaultdrift measured 1,253 patch releases self-published package research the current repository reports 62 passing tests and a 12-mutation battery with every mutation caught.">
+          <div class="ledger-rank">15</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Self-published package research</span><strong>Public</strong></div>
+            <h2>DefaultDrift measured 1,253 patch releases</h2>
+            <p>The current repository reports 62 passing tests and a 12-mutation battery with every mutation caught.</p>
+            <div class="ledger-links"><a href="https://github.com/arian-gogani/defaultdrift">DefaultDrift ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> This corrects the older 61-case, 11-mutation count. The current code is public.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="external" data-search="nobulex listed in awesome-mcp-servers merged directory listing the mcp compliance server was added to the directory&#x27;s security section.">
+          <div class="ledger-rank">16</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Merged directory listing</span><strong>Merged</strong></div>
+            <h2>Nobulex listed in awesome-mcp-servers</h2>
+            <p>The MCP Compliance Server was added to the directory&#x27;s security section.</p>
+            <div class="ledger-links"><a href="https://github.com/punkpeye/awesome-mcp-servers/pull/4512">awesome-mcp-servers #4512 ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> A directory row is discoverability, not adoption.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="research" data-search="thesis.md publishes five observable falsifiers self-published thesis the project states five conditions that would make the original registry thesis wrong and preserves a correction explaining why they do not fully test the current gateway product.">
+          <div class="ledger-rank">17</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Self-published thesis</span><strong>Public</strong></div>
+            <h2>THESIS.md publishes five observable falsifiers</h2>
+            <p>The project states five conditions that would make the original registry thesis wrong and preserves a correction explaining why they do not fully test the current gateway product.</p>
+            <div class="ledger-links"><a href="https://github.com/arian-gogani/nobulex-registry/blob/main/THESIS.md">THESIS.md ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> This is self-critique, not external validation.</p>
+          </div>
+        </article><article class="ledger-record reveal" data-category="external" data-search="yfinance price-adjustment observability patch submitted closed upstream contribution the patch proposed stamping every return path so callers could determine whether requested price adjustment actually happened. it included a ten-case test design and live ticker follow-up.">
+          <div class="ledger-rank">18</div>
+          <div class="ledger-copy">
+            <div class="ledger-meta"><span>Closed upstream contribution</span><strong>Closed without merge</strong></div>
+            <h2>yfinance price-adjustment observability patch submitted</h2>
+            <p>The patch proposed stamping every return path so callers could determine whether requested price adjustment actually happened. It included a ten-case test design and live ticker follow-up.</p>
+            <div class="ledger-links"><a href="https://github.com/ranaroussi/yfinance/pull/2967">yfinance #2967 ↗</a></div>
+            <p class="ledger-caveat"><b>Boundary:</b> The collaborator closed it without merge. It must not be described as an accepted upstream fix.</p>
+          </div>
+        </article>
+      <p class="ledger-empty" hidden>No linked records match that filter.</p>
+    </section>
+
+    <section class="ledger-method reveal">
+      <p class="eyebrow">Ranking rule</p>
+      <h2>Movement outside my repository ranks first.</h2>
+      <p>A change to someone else’s normative text or code outranks a reference. A reference outranks a list. A list outranks a page I wrote about myself. Statuses are rechecked against the linked artifact, so old “open” labels become “merged” or “closed” when reality changes.</p>
+      <p>Excluded from this page: private drafts, work with no surviving public artifact, and claims that cannot be linked.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div><strong>Arian Gogani</strong><p>Student builder and open-source researcher at Granite Bay High School.</p></div>
+    <nav aria-label="Profile links"><a href="index.html">Portfolio</a><a href="https://github.com/arian-gogani">GitHub</a><a href="https://www.linkedin.com/in/arian-gogani-nobulex/" rel="me">Official LinkedIn</a></nav>
+    <p class="identity-note">Generated from the same canonical public profile data as the GitHub profile.</p>
+  </footer>
+</body>
+</html>
