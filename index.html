@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arian Gogani · AI decision integrity</title>
+  <meta name="description" content="Granite Bay High School student building reproducible systems for AI decision integrity. Creator of Nobulex.">
+  <link rel="canonical" href="https://arian-gogani.github.io/">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Arian Gogani · AI decision integrity">
+  <meta property="og:description" content="Granite Bay High School student building reproducible systems for AI decision integrity. Creator of Nobulex.">
+  <meta property="og:url" content="https://arian-gogani.github.io/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Arian Gogani · AI decision integrity">
+  <meta name="twitter:description" content="Granite Bay High School student building reproducible systems for AI decision integrity. Creator of Nobulex.">
+  <meta name="theme-color" content="#07110f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Arian Gogani","url":"https://arian-gogani.github.io","description":"Granite Bay High School student building reproducible systems for AI decision integrity. Creator of Nobulex.","homeLocation":{"@type":"Place","name":"Granite Bay, California"},"affiliation":{"@type":"EducationalOrganization","name":"Granite Bay High School"},"sameAs":["https://github.com/arian-gogani","https://www.linkedin.com/in/arian-gogani-nobulex/","https://x.com/nobulexlabs","https://nobulex.com"],"knowsAbout":["AI decision integrity","software verification","agent security","reproducible research"]}</script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="ambient" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="Arian Gogani, home">AG<span>.</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#work">Work</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#evidence">Evidence</a>
+      <a class="nav-cta" href="https://github.com/arian-gogani">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy reveal">
+        <p class="kicker"><span class="status-dot"></span> Granite Bay High School · Granite Bay, California</p>
+        <h1>I test what<br><em>“verified”</em><br>actually means.</h1>
+        <p class="hero-intro">I build reproducible systems that test what AI verification actually checked, then turn the result into evidence a stranger can inspect.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#work">See the work</a>
+          <a class="button secondary" href="https://www.linkedin.com/in/arian-gogani-nobulex/" rel="me">Official LinkedIn ↗</a>
+        </div>
+      </div>
+      <aside class="decision-console reveal" aria-label="Nobulex decision model">
+        <div class="console-top"><span></span><span></span><span></span><code>decision.boundary</code></div>
+        <div class="console-body">
+          <p><span class="muted">action</span> <strong>broker.order.create</strong></p>
+          <p><span class="muted">evidence</span> <strong class="warn">INDETERMINATE</strong></p>
+          <p><span class="muted">policy</span> <strong>equity-order-v1</strong></p>
+          <div class="console-rule"></div>
+          <p class="console-result"><span>decision</span><strong>ESCALATE</strong></p>
+          <p class="console-note">Missing evidence is not approval.</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="metrics" aria-label="Measured project metrics">
+      <div><strong data-metric="nobulex_stars">40</strong><span>Nobulex stars</span></div>
+      <div><strong data-metric="nobulex_forks">11</strong><span>Nobulex forks</span></div>
+      <div><strong>27</strong><span>executable fixtures</span></div>
+      <div><strong>4</strong><span>merged conformance PRs</span></div>
+      <p>GitHub counts measured <time data-measured-at datetime="2026-09-27">2026-09-27</time>. Every other number links to inspectable work.</p>
+    </section>
+
+    <section class="section" id="work">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Selected work</p>
+        <h2>Claims that ship with a way to check them.</h2>
+      </div>
+      <div class="project-grid"><article class="project-card reveal">
+          <p class="eyebrow">Reproducible research</p>
+          <h3>Nobulex</h3>
+          <p>Executable research on verification boundaries: skipped coverage, self-selected trust anchors, policy scope, log integrity, and ambiguous evidence.</p>
+          <p class="proof">27 synthetic fixtures, six paired historical parser cases, and public CI.</p>
+          <a href="https://github.com/arian-gogani/nobulex" rel="me">Inspect the work <span aria-hidden="true">↗</span></a>
+        </article>
+<article class="project-card reveal">
+          <p class="eyebrow">Working prototype</p>
+          <h3>Decision-integrity gateway</h3>
+          <p>A Python prototype that separates evidence status from execution policy before a financial action can proceed.</p>
+          <p class="proof">PASS, FAIL, or INDETERMINATE evidence feeds a separate PERMIT, BLOCK, or ESCALATE decision.</p>
+          <a href="https://github.com/arian-gogani/nobulex-registry" rel="me">Inspect the work <span aria-hidden="true">↗</span></a>
+        </article>
+<article class="project-card reveal">
+          <p class="eyebrow">Defect research</p>
+          <h3>Fail-open corpus</h3>
+          <p>Minimal reproductions of evaluators and safety checks that can report success without completing the check their result appears to certify.</p>
+          <p class="proof">Each published case names its reproduction limits instead of generalizing from one defect.</p>
+          <a href="https://github.com/arian-gogani/failopen" rel="me">Inspect the work <span aria-hidden="true">↗</span></a>
+        </article></div>
+    </section>
+
+    <section class="section architecture" id="architecture">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Nobulex architecture</p>
+        <h2>Make the decision boundary deterministic.</h2>
+        <p>The world can be ambiguous. The system’s response to that ambiguity does not have to be.</p>
+      </div>
+      <ol><li class="architecture-step reveal">
+          <span>01</span>
+          <div><h3>Collect evidence</h3><p>Bind the proposed action to the exact inputs, sources, timestamps, and identities it depends on.</p></div>
+        </li>
+<li class="architecture-step reveal">
+          <span>02</span>
+          <div><h3>Establish status</h3><p>Return PASS, FAIL, or INDETERMINATE. Missing evidence never becomes a clean result.</p></div>
+        </li>
+<li class="architecture-step reveal">
+          <span>03</span>
+          <div><h3>Apply policy</h3><p>A bounded deterministic policy returns PERMIT, BLOCK, or ESCALATE.</p></div>
+        </li>
+<li class="architecture-step reveal">
+          <span>04</span>
+          <div><h3>Preserve the decision</h3><p>Sign a receipt that binds the action, evidence references, policy version, and outcome.</p></div>
+        </li></ol>
+      <div class="state-pair reveal">
+        <div><small>Evidence status</small><strong>PASS · FAIL · INDETERMINATE</strong></div>
+        <span aria-hidden="true">→</span>
+        <div><small>Execution decision</small><strong>PERMIT · BLOCK · ESCALATE</strong></div>
+      </div>
+    </section>
+
+    <section class="section evidence" id="evidence">
+      <div class="section-heading reveal">
+        <p class="eyebrow">External evidence</p>
+        <h2>The useful result is what changed outside my repository.</h2>
+      </div>
+      <ul><li class="result-row reveal">
+          <a href="https://github.com/ScopeBlind/agent-governance-testvectors/pulls?q=is%3Apr+author%3Aarian-gogani+is%3Amerged">Four conformance-harness pull requests merged <span aria-hidden="true">↗</span></a>
+          <p>The public research distinguishes merged changes from endorsement and freshly reruns only the case it says it reruns.</p>
+        </li>
+<li class="result-row reveal">
+          <a href="https://github.com/ScopeBlind/agent-governance-testvectors/pull/24">A verifier defect reproduced and fixed upstream <span aria-hidden="true">↗</span></a>
+          <p>The maintainer reproduced the failure, released a corrected verifier, and confirmed all four negative checks.</p>
+        </li>
+<li class="result-row reveal">
+          <a href="https://github.com/arian-gogani/nobulex/actions/workflows/verification-boundaries.yml">Verification-boundary research runs in public CI <span aria-hidden="true">↗</span></a>
+          <p>The fixture expectations, historical replay metadata, and deliberate-regression checks are inspectable.</p>
+        </li></ul>
+    </section>
+
+    <section class="principle reveal">
+      <p class="eyebrow">Working standard</p>
+      <blockquote>“If I cannot establish it, I should not return a clean result.”</blockquote>
+      <p>I publish the command, expected result, and limitation beside each claim. Corrections stay visible.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div>
+      <strong>Arian Gogani</strong>
+      <p>Student builder and open-source researcher at Granite Bay High School.</p>
+    </div>
+    <nav aria-label="Profile links">
+      <a href="https://github.com/arian-gogani" rel="me">GitHub</a>
+      <a href="https://www.linkedin.com/in/arian-gogani-nobulex/" rel="me">Official LinkedIn</a>
+      <a href="https://x.com/nobulexlabs" rel="me">X</a>
+      <a href="https://nobulex.com">Nobulex</a>
+    </nav>
+    <p class="identity-note">Official personal website of Arian Gogani. Canonical public data comes from the GitHub profile repository.</p>
+  </footer>
+</body>
+</html>

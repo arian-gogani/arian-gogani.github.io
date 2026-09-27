@@ -1,0 +1,213 @@
+#!/usr/bin/env python3
+"""Build the portfolio from Arian's canonical GitHub profile data."""
+
+from __future__ import annotations
+
+import argparse
+import html
+import json
+import urllib.request
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_SOURCE = "https://raw.githubusercontent.com/arian-gogani/arian-gogani/main/data/profile.json"
+
+
+def load(source: str) -> dict:
+    path = Path(source)
+    if path.exists():
+        return json.loads(path.read_text(encoding="utf-8"))
+    request = urllib.request.Request(source, headers={"User-Agent": "arian-gogani-portfolio-builder"})
+    with urllib.request.urlopen(request, timeout=20) as response:
+        return json.load(response)
+
+
+def esc(value: object) -> str:
+    return html.escape(str(value), quote=True)
+
+
+def build(profile: dict) -> str:
+    ident = profile["identity"]
+    links = profile["links"]
+    metrics = profile["metrics"]
+
+    project_cards = "\n".join(
+        f'''<article class="project-card reveal">
+          <p class="eyebrow">{esc(p['eyebrow'])}</p>
+          <h3>{esc(p['name'])}</h3>
+          <p>{esc(p['description'])}</p>
+          <p class="proof">{esc(p['proof'])}</p>
+          <a href="{esc(p['url'])}" rel="me">Inspect the work <span aria-hidden="true">↗</span></a>
+        </article>'''
+        for p in profile["projects"]
+    )
+    architecture = "\n".join(
+        f'''<li class="architecture-step reveal">
+          <span>{esc(a['step'])}</span>
+          <div><h3>{esc(a['name'])}</h3><p>{esc(a['description'])}</p></div>
+        </li>'''
+        for a in profile["architecture"]
+    )
+    results = "\n".join(
+        f'''<li class="result-row reveal">
+          <a href="{esc(r['url'])}">{esc(r['label'])} <span aria-hidden="true">↗</span></a>
+          <p>{esc(r['detail'])}</p>
+        </li>'''
+        for r in profile["external_results"]
+    )
+
+    json_ld = json.dumps(
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": ident["name"],
+            "url": links["portfolio"],
+            "description": ident["short_bio"],
+            "homeLocation": {"@type": "Place", "name": ident["location"]},
+            "affiliation": {"@type": "EducationalOrganization", "name": ident["school"]},
+            "sameAs": [links["github"], links["linkedin"], links["x"], links["nobulex"]],
+            "knowsAbout": [
+                "AI decision integrity",
+                "software verification",
+                "agent security",
+                "reproducible research",
+            ],
+        },
+        separators=(",", ":"),
+    ).replace("</", "<\\/")
+
+    return f'''<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{esc(ident['name'])} · AI decision integrity</title>
+  <meta name="description" content="{esc(ident['short_bio'])}">
+  <link rel="canonical" href="{esc(links['portfolio'])}/">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="{esc(ident['name'])} · AI decision integrity">
+  <meta property="og:description" content="{esc(ident['short_bio'])}">
+  <meta property="og:url" content="{esc(links['portfolio'])}/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{esc(ident['name'])} · AI decision integrity">
+  <meta name="twitter:description" content="{esc(ident['short_bio'])}">
+  <meta name="theme-color" content="#07110f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">{json_ld}</script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="ambient" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="Arian Gogani, home">AG<span>.</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#work">Work</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#evidence">Evidence</a>
+      <a class="nav-cta" href="{esc(links['github'])}">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy reveal">
+        <p class="kicker"><span class="status-dot"></span> {esc(ident['school'])} · {esc(ident['location'])}</p>
+        <h1>I test what<br><em>“verified”</em><br>actually means.</h1>
+        <p class="hero-intro">{esc(ident['bio'])}</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#work">See the work</a>
+          <a class="button secondary" href="{esc(links['linkedin'])}" rel="me">Official LinkedIn ↗</a>
+        </div>
+      </div>
+      <aside class="decision-console reveal" aria-label="Nobulex decision model">
+        <div class="console-top"><span></span><span></span><span></span><code>decision.boundary</code></div>
+        <div class="console-body">
+          <p><span class="muted">action</span> <strong>broker.order.create</strong></p>
+          <p><span class="muted">evidence</span> <strong class="warn">INDETERMINATE</strong></p>
+          <p><span class="muted">policy</span> <strong>equity-order-v1</strong></p>
+          <div class="console-rule"></div>
+          <p class="console-result"><span>decision</span><strong>ESCALATE</strong></p>
+          <p class="console-note">Missing evidence is not approval.</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="metrics" aria-label="Measured project metrics">
+      <div><strong data-metric="nobulex_stars">{metrics['nobulex_stars']}</strong><span>Nobulex stars</span></div>
+      <div><strong data-metric="nobulex_forks">{metrics['nobulex_forks']}</strong><span>Nobulex forks</span></div>
+      <div><strong>{metrics['verification_fixtures']}</strong><span>executable fixtures</span></div>
+      <div><strong>{metrics['merged_conformance_prs']}</strong><span>merged conformance PRs</span></div>
+      <p>GitHub counts measured <time data-measured-at datetime="{metrics['measured_at']}">{metrics['measured_at']}</time>. Every other number links to inspectable work.</p>
+    </section>
+
+    <section class="section" id="work">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Selected work</p>
+        <h2>Claims that ship with a way to check them.</h2>
+      </div>
+      <div class="project-grid">{project_cards}</div>
+    </section>
+
+    <section class="section architecture" id="architecture">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Nobulex architecture</p>
+        <h2>Make the decision boundary deterministic.</h2>
+        <p>The world can be ambiguous. The system’s response to that ambiguity does not have to be.</p>
+      </div>
+      <ol>{architecture}</ol>
+      <div class="state-pair reveal">
+        <div><small>Evidence status</small><strong>PASS · FAIL · INDETERMINATE</strong></div>
+        <span aria-hidden="true">→</span>
+        <div><small>Execution decision</small><strong>PERMIT · BLOCK · ESCALATE</strong></div>
+      </div>
+    </section>
+
+    <section class="section evidence" id="evidence">
+      <div class="section-heading reveal">
+        <p class="eyebrow">External evidence</p>
+        <h2>The useful result is what changed outside my repository.</h2>
+      </div>
+      <ul>{results}</ul>
+    </section>
+
+    <section class="principle reveal">
+      <p class="eyebrow">Working standard</p>
+      <blockquote>“If I cannot establish it, I should not return a clean result.”</blockquote>
+      <p>I publish the command, expected result, and limitation beside each claim. Corrections stay visible.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div>
+      <strong>{esc(ident['name'])}</strong>
+      <p>{esc(ident['role'])} at {esc(ident['school'])}.</p>
+    </div>
+    <nav aria-label="Profile links">
+      <a href="{esc(links['github'])}" rel="me">GitHub</a>
+      <a href="{esc(links['linkedin'])}" rel="me">Official LinkedIn</a>
+      <a href="{esc(links['x'])}" rel="me">X</a>
+      <a href="{esc(links['nobulex'])}">Nobulex</a>
+    </nav>
+    <p class="identity-note">Official personal website of Arian Gogani. Canonical public data comes from the GitHub profile repository.</p>
+  </footer>
+</body>
+</html>
+'''
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--source", default=DEFAULT_SOURCE)
+    args = parser.parse_args()
+    profile = load(args.source)
+    (ROOT / "data").mkdir(exist_ok=True)
+    (ROOT / "data" / "profile.json").write_text(json.dumps(profile, indent=2) + "\n", encoding="utf-8")
+    (ROOT / "index.html").write_text(build(profile), encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()
