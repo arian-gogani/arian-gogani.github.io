@@ -35,7 +35,8 @@ def check(condition: bool, message: str) -> None:
 
 
 def main() -> None:
-    source = ROOT.parent / "arian-gogani" / "data" / "profile.json"
+    sibling_source = ROOT.parent / "arian-gogani" / "data" / "profile.json"
+    source = sibling_source if sibling_source.exists() else ROOT / "data" / "profile.json"
     subprocess.run([sys.executable, str(ROOT / "scripts" / "build.py"), "--source", str(source)], check=True)
     page = (ROOT / "index.html").read_text(encoding="utf-8")
     profile = json.loads((ROOT / "data" / "profile.json").read_text(encoding="utf-8"))
