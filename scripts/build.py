@@ -109,7 +109,8 @@ def build(profile: dict) -> str:
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2">
+  <script>document.documentElement.classList.add("js")</script>
+  <link rel="stylesheet" href="styles.css?v=3">
   <script type="application/ld+json">{json_ld}</script>
   <script src="app.js" defer></script>
 </head>
@@ -123,6 +124,7 @@ def build(profile: dict) -> str:
       <a href="#architecture">Architecture</a>
       <a href="#evidence">Evidence</a>
       <a href="evidence.html">Full ledger</a>
+      <a href="press.html">Press kit</a>
       <a class="nav-cta" href="{esc(links['github'])}">GitHub ↗</a>
     </nav>
   </header>
@@ -277,7 +279,8 @@ def build_evidence(profile: dict) -> str:
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2">
+  <script>document.documentElement.classList.add("js")</script>
+  <link rel="stylesheet" href="styles.css?v=3">
   <script type="application/ld+json">{json_ld}</script>
   <script src="app.js" defer></script>
   <script src="evidence.js" defer></script>
@@ -290,6 +293,7 @@ def build_evidence(profile: dict) -> str:
     <nav aria-label="Main navigation">
       <a href="index.html#work">Work</a>
       <a href="index.html#architecture">Architecture</a>
+      <a href="press.html">Press kit</a>
       <a class="nav-cta" href="{esc(links['github'])}">GitHub ↗</a>
     </nav>
   </header>
@@ -334,6 +338,164 @@ def build_evidence(profile: dict) -> str:
 '''
 
 
+def build_press(profile: dict) -> str:
+    ident = profile["identity"]
+    links = profile["links"]
+    metrics = profile["metrics"]
+    achievements = {item["rank"]: item for item in profile["achievements"]}
+    selected = [achievements[rank] for rank in (1, 2, 3, 5, 6, 7)]
+
+    records = []
+    for item in selected:
+        item_links = "".join(
+            f'<a href="{esc(link["url"])}">{esc(link["label"])} ↗</a>'
+            for link in item["links"]
+        )
+        records.append(
+            f'''<article class="press-record">
+          <div class="ledger-meta"><span>{esc(item['classification'])}</span><strong>{esc(item['status'])}</strong></div>
+          <h3>{esc(item['title'])}</h3>
+          <p>{esc(item['summary'])}</p>
+          <div class="ledger-links">{item_links}</div>
+          <p class="ledger-caveat"><b>Boundary:</b> {esc(item['caveat'])}</p>
+        </article>'''
+        )
+
+    json_ld = json.dumps(
+        {
+            "@context": "https://schema.org",
+            "@type": "ProfilePage",
+            "name": f"{ident['name']} press and school fact sheet",
+            "url": f"{links['portfolio']}/press.html",
+            "dateModified": metrics["measured_at"],
+            "mainEntity": {
+                "@type": "Person",
+                "name": ident["name"],
+                "description": ident["short_bio"],
+                "affiliation": {
+                    "@type": "EducationalOrganization",
+                    "name": ident["school"],
+                },
+                "homeLocation": {"@type": "Place", "name": ident["location"]},
+                "sameAs": [links["github"], links["linkedin"], links["x"], links["nobulex"]],
+            },
+        },
+        separators=(",", ":"),
+    ).replace("</", "<\\/")
+
+    return f'''<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{esc(ident['name'])} Press Kit | {esc(ident['school'])} student</title>
+  <meta name="description" content="Verified press and school fact sheet for {esc(ident['name'])}, a {esc(ident['school'])} student and creator of Nobulex.">
+  <link rel="canonical" href="{esc(links['portfolio'])}/press.html">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="{esc(ident['name'])} | Press and school fact sheet">
+  <meta property="og:description" content="Linked evidence for merged open-source contributions, current project status, and reporting boundaries.">
+  <meta property="og:url" content="{esc(links['portfolio'])}/press.html">
+  <meta name="theme-color" content="#07110f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add("js")</script>
+  <link rel="stylesheet" href="styles.css?v=3">
+  <script type="application/ld+json">{json_ld}</script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#press">Skip to fact sheet</a>
+  <div class="ambient" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="wordmark" href="index.html" aria-label="{esc(ident['name'])}, home">AG<span>.</span></a>
+    <nav aria-label="Main navigation">
+      <a href="index.html">Portfolio</a>
+      <a href="evidence.html">Evidence ledger</a>
+      <a class="nav-cta" href="{esc(links['github'])}">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <main id="press">
+    <section class="press-hero reveal">
+      <p class="kicker"><span class="status-dot"></span> Press and school fact sheet · verified {esc(metrics['measured_at'])}</p>
+      <h1>A story with<br><em>receipts.</em></h1>
+      <p class="hero-intro">{esc(ident['name'])} is a {esc(ident['school'])} student in {esc(ident['location'])} who builds reproducible systems for AI decision integrity and contributes fixes, tests, and technical guidance to open-source projects.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#verified">Check the record</a>
+        <a class="button secondary" href="{esc(links['linkedin'])}" rel="me">Official LinkedIn ↗</a>
+      </div>
+    </section>
+
+    <section class="press-summary reveal" aria-label="Short biography">
+      <p class="eyebrow">Short biography</p>
+      <p>{esc(ident['bio'])}</p>
+      <p>His current project, Nobulex, is an open-source prototype. It is implemented and tested locally, but it is not deployed in a customer production path.</p>
+    </section>
+
+    <section class="section" id="verified">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Verified external results</p>
+        <h2>Work accepted outside his own repositories.</h2>
+        <p>Each item links to the external pull request and preserves the limitation that comes with it.</p>
+      </div>
+      <div class="press-records">{''.join(records)}</div>
+      <a class="button secondary ledger-button" href="evidence.html">Open all {len(profile['achievements'])} classified records →</a>
+    </section>
+
+    <section class="section press-facts">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Measured project facts</p>
+        <h2>Numbers with a date and a source.</h2>
+      </div>
+      <div class="metrics">
+        <div><strong>{metrics['nobulex_stars']}</strong><span>Nobulex stars</span></div>
+        <div><strong>{metrics['nobulex_forks']}</strong><span>Nobulex forks</span></div>
+        <div><strong>{metrics['verification_fixtures']}</strong><span>executable fixtures</span></div>
+        <div><strong>5</strong><span>merged shared-test-vector contributions</span></div>
+        <p>Repository counts measured {esc(metrics['measured_at'])}. Merge links are listed above and in the evidence ledger.</p>
+      </div>
+    </section>
+
+    <section class="press-grid">
+      <article class="press-note reveal">
+        <p class="eyebrow">Accurate framing</p>
+        <h2>What the record supports</h2>
+        <ul>
+          <li>A Granite Bay High School student contributed code, tests, and technical guidance that external maintainers merged.</li>
+          <li>The work examines where verification can appear successful while checking less than a reader assumes.</li>
+          <li>The public artifacts can be inspected independently.</li>
+        </ul>
+      </article>
+      <article class="press-note caution reveal">
+        <p class="eyebrow">Reporting boundary</p>
+        <h2>What the record does not support</h2>
+        <ul>
+          <li>No OWASP, Microsoft, IETF, or maintainer endorsement of Nobulex is claimed.</li>
+          <li>No paid customer, production deployment, prevented financial loss, or finished commercial product is claimed.</li>
+          <li>Merged documentation and listings are identified separately from merged code.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="principle reveal">
+      <p class="eyebrow">Authorship disclosure</p>
+      <blockquote>AI-assisted work should still be independently checkable.</blockquote>
+      <p>The work and this fact sheet were AI-assisted. Public contribution records identify the human author, external reviewer, status, and exact diff. Interview Arian about the experiments, decisions, corrections, and limitations he can personally explain.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div><strong>{esc(ident['name'])}</strong><p>{esc(ident['role'])} at {esc(ident['school'])}.</p></div>
+    <nav aria-label="Official links"><a href="index.html">Portfolio</a><a href="{esc(links['github'])}" rel="me">GitHub</a><a href="{esc(links['linkedin'])}" rel="me">Official LinkedIn</a></nav>
+    <p class="identity-note">Official fact sheet generated from the same canonical public profile data as the portfolio and GitHub profile.</p>
+  </footer>
+</body>
+</html>
+'''
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--source", default=DEFAULT_SOURCE)
@@ -343,6 +505,7 @@ def main() -> None:
     (ROOT / "data" / "profile.json").write_text(json.dumps(profile, indent=2) + "\n", encoding="utf-8")
     (ROOT / "index.html").write_text(build(profile), encoding="utf-8")
     (ROOT / "evidence.html").write_text(build_evidence(profile), encoding="utf-8")
+    (ROOT / "press.html").write_text(build_press(profile), encoding="utf-8")
 
 
 if __name__ == "__main__":

@@ -40,9 +40,12 @@ def main() -> None:
     subprocess.run([sys.executable, str(ROOT / "scripts" / "build.py"), "--source", str(source)], check=True)
     page = (ROOT / "index.html").read_text(encoding="utf-8")
     evidence = (ROOT / "evidence.html").read_text(encoding="utf-8")
+    press = (ROOT / "press.html").read_text(encoding="utf-8")
     profile = json.loads((ROOT / "data" / "profile.json").read_text(encoding="utf-8"))
     parser = Inspector()
     parser.feed(page)
+    press_parser = Inspector()
+    press_parser.feed(press)
 
     check("Granite Bay High School" in page, "school missing from portfolio")
     check("<title>Arian Gogani | Granite Bay High School student and Nobulex creator</title>" in page, "search title does not identify the school")
@@ -64,13 +67,35 @@ def main() -> None:
     fallback = module.load("https://127.0.0.1:1/profile.json")
     check(fallback["identity"]["name"] == "Arian Gogani", "remote failure did not use verified snapshot")
     check(evidence.count('class="ledger-record reveal"') == 18, "evidence ledger does not contain 18 records")
-    check('href="styles.css?v=2"' in page and 'href="styles.css?v=2"' in evidence, "pages do not bust the stale stylesheet cache")
+    check(
+        all('href="styles.css?v=3"' in item for item in (page, evidence, press)),
+        "pages do not share the current stylesheet cache key",
+    )
     check("Closed without merge" in evidence, "closed yfinance status was lost")
     check("36 checks with zero failures" in evidence, "fresh Witness Independence result missing")
     check("62 passing tests" in evidence and "12-mutation" in evidence, "fresh DefaultDrift result missing")
     check("decompress_sync" not in evidence, "unpublished aiohttp draft entered public ledger")
     check((ROOT / "evidence.js").stat().st_size > 500, "ledger filtering script is incomplete")
-    print("portfolio checks: 20/20 passed")
+    check("Granite Bay High School" in press, "press page omits the school")
+    check("arian-gogani-nobulex" in press, "press page omits the official LinkedIn")
+    check("prototype" in press.lower() and "not deployed" in press.lower(), "press page overstates deployment")
+    check("Harvard" not in press, "press page contains the false Harvard affiliation")
+    check("agentic-skills-top-10/pull/35" in press, "press page omits the OWASP normative change")
+    check("agent-governance-vocabulary/pull/161" in press, "press page omits the merged validator fix")
+    check("agent-governance-testvectors/pull/24" in press, "press page omits the accepted adversarial tests")
+    check("AI-assisted" in press, "press page omits the assistance disclosure")
+    check("press.html" in (ROOT / "sitemap.xml").read_text(encoding="utf-8"), "press page missing from sitemap")
+    check(press_parser.json_ld == 1, "press ProfilePage JSON-LD missing or duplicated")
+    check('href="press.html"' in page, "portfolio does not link to press page")
+    check('href="press.html"' in evidence, "evidence ledger does not link to press page")
+    check("What the record does not support" in press, "press page omits reporting boundaries")
+    check(
+        all('document.documentElement.classList.add("js")' in item for item in (page, evidence, press)),
+        "pages do not enable reveal animations progressively",
+    )
+    check(".js .reveal" in (ROOT / "styles.css").read_text(encoding="utf-8"), "content can disappear when JavaScript is unavailable")
+    check('"IntersectionObserver" in window' in (ROOT / "app.js").read_text(encoding="utf-8"), "older browsers can leave content hidden")
+    print("portfolio checks: 36/36 passed")
 
 
 if __name__ == "__main__":

@@ -1,17 +1,23 @@
 const source = "https://raw.githubusercontent.com/arian-gogani/arian-gogani/main/data/profile.json";
 
-document.querySelectorAll(".reveal").forEach((element) => {
+const revealElements = document.querySelectorAll(".reveal");
+
+if ("IntersectionObserver" in window) {
   const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        element.classList.add("visible");
-        observer.disconnect();
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
       }
     },
     { threshold: 0.12 }
   );
-  observer.observe(element);
-});
+  revealElements.forEach((element) => observer.observe(element));
+} else {
+  revealElements.forEach((element) => element.classList.add("visible"));
+}
 
 fetch(source, { cache: "no-store" })
   .then((response) => {
