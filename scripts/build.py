@@ -226,7 +226,7 @@ def build_evidence(profile: dict) -> str:
     for item in achievements:
         category = (
             "external"
-            if item["classification"].startswith(("Normative", "Merged", "Closed"))
+            if item["classification"].startswith(("Normative", "Merged", "Closed", "Open reviewed"))
             or "upstream" in item["classification"].lower()
             else "research"
         )

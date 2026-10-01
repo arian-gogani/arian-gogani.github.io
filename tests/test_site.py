@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import importlib.util
 import subprocess
 import sys
@@ -66,11 +67,13 @@ def main() -> None:
     spec.loader.exec_module(module)
     fallback = module.load("https://127.0.0.1:1/profile.json")
     check(fallback["identity"]["name"] == "Arian Gogani", "remote failure did not use verified snapshot")
-    check(evidence.count('class="ledger-record reveal"') == 18, "evidence ledger does not contain 18 records")
+    check(evidence.count('class="ledger-record reveal"') == 19, "evidence ledger does not contain 19 records")
     check(
         all('href="styles.css?v=3"' in item for item in (page, evidence, press)),
         "pages do not share the current stylesheet cache key",
     )
+    check("Approved by one reviewer; open" in evidence and "/pull/2217" in evidence, "OWASP review win is missing or overstated")
+    check(re.search(r'data-category="external" data-search="owasp receipt-guidance', evidence), "reviewer approval is hidden from the External movement filter")
     check("Closed without merge" in evidence, "closed yfinance status was lost")
     check("36 checks with zero failures" in evidence, "fresh Witness Independence result missing")
     check("62 passing tests" in evidence and "12-mutation" in evidence, "fresh DefaultDrift result missing")
@@ -95,7 +98,7 @@ def main() -> None:
     )
     check(".js .reveal" in (ROOT / "styles.css").read_text(encoding="utf-8"), "content can disappear when JavaScript is unavailable")
     check('"IntersectionObserver" in window' in (ROOT / "app.js").read_text(encoding="utf-8"), "older browsers can leave content hidden")
-    print("portfolio checks: 36/36 passed")
+    print("portfolio checks: 38/38 passed")
 
 
 if __name__ == "__main__":
